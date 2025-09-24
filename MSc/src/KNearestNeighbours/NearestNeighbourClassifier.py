@@ -36,8 +36,16 @@ class NearestNeighbourClassifier:
         # Need to use the get_probabilities function to return the action with the highest
         # expected utility
         # i.e. maximising sum_y P(y|x) U(a,y)
+       probabilities = self.get_probabilities(x)
+       n_actions = U.shape[0]
+       expected_utilities = np.zeros(n_actions)
+    
+       for action in range(n_actions):
+           for label in range(self.n_classes):
+               expected_utilities[action] += probabilities[label] * U[action, label]
+    
+       return np.argmax(expected_utilities)
 
-        return
     
     ## predict the most likely label
     def predict(self, x):
